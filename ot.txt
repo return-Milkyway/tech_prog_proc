@@ -1,0 +1,16 @@
+Filled container. 
+Container contains 6 elements.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1
+Mark =9
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2
+Mark =10
+It is Poslovica: Strana = Poslov1, text = Poslov_text1
+Incorrect reviw
+It is Poslovica: Strana = Poslov2, text = Poslov_text2
+Incorrect reviw
+It is Aphorism: Author = Aphorism3, text = Aphorism_text3
+Mark =5
+It is Poslovica: Strana = Poslov3, text = Poslov_text3
+Mark =4
+Empty container. 
+none
