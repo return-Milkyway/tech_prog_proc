@@ -1,0 +1,8 @@
+Filled container. 
+Container contains 6 elements.
+Only aphorism 
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2
+It is Aphorism: Author = Aphorism3, text = Aphorism_text3
+Empty container. 
+none
