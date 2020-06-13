@@ -1,0 +1,21 @@
+Filled sorted container. 
+Container contains 4 elements.
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+Num znakov prepinania = 3
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+Num znakov prepinania = 2
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Incorrect reviw
+Num znakov prepinania = 1
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+Num znakov prepinania = 0
+Only aphorism 
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+Empty container. 
+none

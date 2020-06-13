@@ -1,0 +1,16 @@
+1
+Aphorism1
+Aphorism_text1,,
+1
+1
+Aphorism2
+Aphorism_text2,..
+4
+2
+Poslov1
+Poslov_,text1
+-1
+2
+Poslov2
+qweeqw
+4
