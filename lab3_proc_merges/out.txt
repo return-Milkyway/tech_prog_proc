@@ -1,0 +1,35 @@
+Filled sorted container. 
+Container contains 8 elements.
+It is Zagadka: Vopros = zagadka2, otvet = agadka_ot,.,.v2
+Mark =10
+Num znakov prepinania = 4
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+Num znakov prepinania = 3
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =5
+Num znakov prepinania = 2
+It is Aphorism: Author = Aphorism3, text = Aphorism_te,.xt3
+Mark =7
+Num znakov prepinania = 2
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Incorrect reviw
+Num znakov prepinania = 1
+It is Poslovica: Strana = Poslov2, text = Poslov_text.2
+Incorrect reviw
+Num znakov prepinania = 1
+It is Poslovica: Strana = Poslov3, text = Poslov_text3
+Mark =8
+Num znakov prepinania = 0
+It is Zagadka: Vopros = zagadka1, otvet = zagadka_otv1
+Mark =9
+Num znakov prepinania = 0
+Only aphorism 
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =5
+It is Aphorism: Author = Aphorism3, text = Aphorism_te,.xt3
+Mark =7
+Empty container. 
+none
