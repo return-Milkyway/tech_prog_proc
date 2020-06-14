@@ -1,0 +1,16 @@
+Filled container. 
+Container contains 6 elements.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1.
+Знаков препинания = 1
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,,
+Знаков препинания = 2
+It is Poslovica: Strana = Poslov1, text = Poslov_tex.,t1
+Знаков препинания = 2
+It is Poslovica: Strana = Poslov2, text = Poslov_text!.2
+Знаков препинания = 2
+It is Aphorism: Author = Aphorism3, text = Aphorism_text!!?3
+Знаков препинания = 3
+It is Poslovica: Strana = Poslov3, text = Poslov_text3
+Знаков препинания = 0
+Empty container. 
+none
