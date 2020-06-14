@@ -1,0 +1,79 @@
+Filled sorted container. 
+Multimethod.
+APHORISM and APHORISM.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+APHORISM and APHORISM.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+APHORISM and POSLOV.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Mark =8
+APHORISM and POSLOV.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+APHORISM and ZAGADKA.
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =1
+It is Zagadka: Vopros = Zagadka1, otvet = zagad_otvet1
+Mark =2
+APHORISM and APHORISM.
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+APHORISM and POSLOV.
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Mark =8
+APHORISM and POSLOV.
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+APHORISM and ZAGADKA.
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+It is Zagadka: Vopros = Zagadka1, otvet = zagad_otvet1
+Mark =2
+POSLOV and POSLOV.
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Mark =8
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Mark =8
+POSLOV and POSLOV.
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Mark =8
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+POSLOV and ZAGADKA.
+It is Poslovica: Strana = Poslov1, text = Poslov_,text1
+Mark =8
+It is Zagadka: Vopros = Zagadka1, otvet = zagad_otvet1
+Mark =2
+POSLOV and POSLOV.
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+POSLOV and ZAGADKA.
+It is Poslovica: Strana = Poslov2, text = qweeqw
+Mark =4
+It is Zagadka: Vopros = Zagadka1, otvet = zagad_otvet1
+Mark =2
+ZAGADKA and ZAGADKA.
+It is Zagadka: Vopros = Zagadka1, otvet = zagad_otvet1
+Mark =2
+It is Zagadka: Vopros = Zagadka1, otvet = zagad_otvet1
+Mark =2
+Empty container. 
+none
