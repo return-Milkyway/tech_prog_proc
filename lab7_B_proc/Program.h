@@ -2,62 +2,62 @@
 #include <fstream>
 #include <iostream>
 using namespace std;
+const int SIZE = 20;
 
-struct poslov {
-	char strana[20];
-	char text[20];
+struct proverb {
+	char country[SIZE];
+	char text[SIZE];
 };
 	
-struct zagad {
-	char vopros[20];
-	char otvet[20];
+struct riddle {
+	char question[SIZE];
+	char answer[SIZE];
 };
  	
 struct aphorism {
-	char author[20];
-	char text[20];	 
+	char author[SIZE];
+	char text[SIZE];	 
 };
   	
-struct mudr {
-	enum  key{APHORISM, POSLOV,ZAGAD};
-	key k;  
+struct wisdom {
+	enum  key {APHORISM, PROVERB, RIDDLE};
+	key type_struct;  
 	int mark;  
 	union { 
-		aphorism a;
-		poslov p;
-		zagad z;
+		aphorism aphor;
+		proverb prov;
+		riddle ridd;
 	};
 };
 	
 struct container {
-	mudr *cont;
+	wisdom *item_with_wisdom;
 	struct container *next;
 };
  	
-int In(container *lst,ifstream &ifst);
-void In(aphorism &a, ifstream &ifst);
-void In(poslov &p, ifstream &ifst);
-void In(zagad &z, ifstream &ifst);
-mudr* In(ifstream &ifst);
-void Out(poslov &p, ofstream &ofst);
-void Out(aphorism &a,ofstream &ofst);
-void Out(zagad &z, ifstream &ifst);
-void Out(mudr &s, ofstream &ofst);
-void Out(container *lst,ofstream &ofst);
+int In(container *storehouse_of_wisdom, ifstream &ifst);
+void In(aphorism &aphor, ifstream &ifst);
+void In(proverb &prov, ifstream &ifst);
+void In(riddle &ridd, ifstream &ifst);
+wisdom* In(ifstream &ifst);
+void Out(proverb &prov, ofstream &ofst);
+void Out(aphorism &aphor, ofstream &ofst);
+void Out(riddle &ridd, ofstream &ofst);
+void Out(wisdom &item_with_wisdom, ofstream &ofst);
+void Out(container *storehouse_of_wisdom, ofstream &ofst);
 struct container *  Init();
-struct container *  Init2(mudr  *a);
-struct container * Clear(container *lst);	
-int Num_prep_aphorism(aphorism &a);
-int Num_prep_poslov(poslov &p);
-int Num_prep_mudr(mudr &m);
-void Num_prep(container *lst,ofstream &ofst);
-int Num_prep_zagad(zagad &z);
-bool Compare(mudr *first,mudr *second);
-void Sort(container *c);
-struct container * Swap(struct container *lst1, struct container *lst2, struct container *head);
-void Out_only_aphorism(container *lst,ofstream &ofst);
-
-void MultiMethod(container *c, ofstream &ofst);
+struct container *  Init2(wisdom  *aphor);
+struct container * Clear(container *storehouse_of_wisdom);	
+int Num_prep_aphorism(aphorism &aphor);
+int Num_prep_proverb(proverb &prov);
+int Num_prep_wisdom(wisdom &item_with_wisdom);
+void Num_prep(container *storehouse_of_wisdom, ofstream &ofst);
+int Num_prep_riddle(riddle &ridd);
+bool Compare(wisdom *first, wisdom *second);
+void Sort(container *storehouse_of_wisdom);
+struct container * Swap(struct container *storehouse_of_wisdom_1, struct container *storehouse_of_wisdom_2, struct container *head);
+void Out_only_aphorism(container *storehouse_of_wisdom, ofstream &ofst);
+void MultiMethod(container *storehouse_of_wisdom, ofstream &ofst);
 
 
  

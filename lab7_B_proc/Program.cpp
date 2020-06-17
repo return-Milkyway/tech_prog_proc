@@ -1,387 +1,399 @@
 #include "Program.h"
-//using namespace std;	 
-int In(container *lst,ifstream &ifst){
+#include <string>
+
+int In(container *storehouse_of_wisdom, ifstream &ifst){
 	struct container *last = Init2(In(ifst));
-	if (last->cont==0){
+	if (last -> item_with_wisdom == 0) {
 		return 0;
 	}
-	struct container *tmp;
-	tmp = lst->next; 
-	lst->next = last; 
-	last->next = tmp; 	  
+	struct container *next_wisdom;
+	next_wisdom = storehouse_of_wisdom -> next; 
+	storehouse_of_wisdom -> next = last; 
+	last -> next = next_wisdom; 
+		  
 	while(!ifst.eof()) {			
-		struct container *newItem = Init2(In(ifst));
-		if (newItem->cont==0){
+		struct container *new_wisdom = Init2(In(ifst));
+		if (new_wisdom -> item_with_wisdom == 0){
 			return 0;
 		}
-		struct container *tmp;		  
-		tmp = last->next; 
-		last->next = newItem;
-		newItem->next = tmp;
-		last=newItem;
+		
+		struct container *next_wisdom;		  
+		next_wisdom = last -> next; 
+		last -> next = new_wisdom;
+		new_wisdom -> next = next_wisdom;
+		last = new_wisdom;
 	}
 	return(1);
 }
  	
-void In(aphorism &a, ifstream &ifst) {
-	char str[20];
+void In(aphorism &aphor, ifstream &ifst) {
+	char str[SIZE];
 	ifst.get();
-	ifst.getline(a.author, sizeof(str)).eof();
-	ifst.getline(a.text, sizeof(str)).eof();
+	ifst.getline(aphor.author, sizeof(str)).eof();
+	ifst.getline(aphor.text, sizeof(str)).eof();
 }
  
-void In(zagad &z, ifstream &ifst) {
-	char str[20];
+void In(riddle &ridd, ifstream &ifst) {
+	char str[SIZE];
 	ifst.get();
-	ifst.getline( z.vopros, sizeof(str)).eof();
-	ifst.getline(z.otvet, sizeof(str)).eof();
+	ifst.getline(ridd.question, sizeof(str)).eof();
+	ifst.getline(ridd.answer, sizeof(str)).eof();
 }
  
-void In(poslov &p, ifstream &ifst) {
-	char str[20];
+void In(proverb &prov, ifstream &ifst) {
+	char str[SIZE];
 	ifst.get();
-	ifst.getline( p.strana, sizeof(str)).eof();
-	ifst.getline(p.text, sizeof(str)).eof();
+	ifst.getline(prov.country, sizeof(str)).eof();
+	ifst.getline(prov.text, sizeof(str)).eof();
 }
  
-mudr * In(ifstream &ifst) {
-	mudr *sp;
-	int k;
-	ifst >> k;
-	switch(k) {
-		case 1:
-			sp = new mudr;
-			sp->k = mudr::key::APHORISM;
-			In(sp->a, ifst);
-			break;
-		case 2:
-			sp = new mudr;
-			sp->k = mudr::key::POSLOV;
-			In(sp->p, ifst);
-			break;
-		case 3:
-			sp = new mudr;
-			sp->k = mudr::key::ZAGAD;
-			In(sp->z, ifst);
-			break;
-		default:
-			return 0;
+wisdom * In(ifstream &ifst) {
+	wisdom *item_with_wisdom;
+	string type_struct;
+	ifst >> type_struct;
+	if (type_struct == "Aphorism"){
+		item_with_wisdom = new wisdom;
+		item_with_wisdom -> type_struct = wisdom::key::APHORISM;
+		In(item_with_wisdom -> aphor, ifst);
+	} else if (type_struct == "Proverb"){
+		item_with_wisdom = new wisdom;
+		item_with_wisdom -> type_struct = wisdom::key::PROVERB;
+		In(item_with_wisdom -> prov, ifst);
+	} else if (type_struct == "Riddle"){
+		item_with_wisdom = new wisdom;
+		item_with_wisdom -> type_struct = wisdom::key::RIDDLE;
+		In(item_with_wisdom -> ridd, ifst);
+	} else {
+		return 0;
 	}
-	ifst >> sp->mark;	
-	return sp;
+	ifst >> item_with_wisdom -> mark;	
+	return item_with_wisdom;
 }
  
-void Out(poslov &p, ofstream &ofst) {
-	ofst << "It is Poslovica: Strana = "
-	<< p.strana << ", text = " << p.text << endl;
+void Out(proverb &prov, ofstream &ofst) {
+	ofst << "It is Proverb: country = "
+	<< prov.country << ", text = " << prov.text << endl;
 }
  
-void Out(zagad &z, ofstream &ofst) {
-	ofst << "It is Zagadka: Vopros = "
-	<< z.vopros << ", otvet = " << z.otvet << endl;
+void Out(riddle &ridd, ofstream &ofst) {
+	ofst << "It is Riddle: question = "
+	<< ridd.question << ", answer = " << ridd.answer << endl;
 }
 
-void Out(aphorism &a, ofstream &ofst) {
-	ofst << "It is Aphorism: Author = " << a.author
-	<< ", text = " << a.text << endl;
+void Out(aphorism &aphor, ofstream &ofst) {
+	ofst << "It is Aphorism: author = " << aphor.author
+	<< ", text = " << aphor.text << endl;
 }
  
-void Out(mudr &s, ofstream &ofst) {
-	switch(s.k) {
-		case mudr::key::APHORISM:
-			Out(s.a, ofst);
-			break;
-		case mudr::key::POSLOV:
-			Out(s.p, ofst);
-			break;
-		case mudr::key::ZAGAD:
-			Out(s.z, ofst);
-			break;
-		default:
-		ofst << "Incorrect figure!" << endl;
-	};
-	if ((s.mark>10) || (s.mark<0)){
-		ofst << "Incorrect reviw"<<endl;
-		return;
-	}
-	ofst << "Mark ="<<s.mark <<endl;
-}
- 
-void Out(container *lst,ofstream &ofst) {
+void Out(wisdom &item_with_wisdom, ofstream &ofst) {
 	
-	if(lst->next==lst){
-		ofst<<"none"<<endl;
+	switch(item_with_wisdom.type_struct) {
+		case wisdom::key::APHORISM:
+			Out(item_with_wisdom.aphor, ofst);
+			break;
+		case wisdom::key::PROVERB:
+			Out(item_with_wisdom.prov, ofst);
+			break;
+		case wisdom::key::RIDDLE:
+			Out(item_with_wisdom.ridd, ofst);
+			break;
+		default:
+		ofst << "Incorrect wisdom!" << endl;
+	}
+	
+	if ((item_with_wisdom.mark > 10) || (item_with_wisdom.mark < 0)){
+		ofst << "Incorrect reviw" << endl;
 		return;
 	}
-	struct container *p;
-	p = lst->next;
-	int num=0;
+	
+	ofst << "Mark = " << item_with_wisdom.mark << endl;
+}
+ 
+void Out(container *storehouse_of_wisdom, ofstream &ofst) {
+	
+	if(storehouse_of_wisdom -> next == storehouse_of_wisdom){
+		ofst << "None" << endl;
+		return;
+	}
+	
+	struct container *prov;
+	prov = storehouse_of_wisdom -> next;
+	
+	int count = 0;
 	do {
-		num=num+1;
-		p = p->next; 
-	} while (p != lst); 
-	ofst<<"Container contains " << num 	<< " elements." << endl;
-	p = lst->next;
+		count = count + 1;
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
+	ofst<<"Container contains " << count << " elements." << endl;
+	
+	prov = storehouse_of_wisdom -> next;
 	do {
-		mudr *s=p->cont;
-		Out(*s,ofst);
-		p = p->next; 
-	} while (p != lst); 
+		wisdom *item = prov -> item_with_wisdom;
+		Out(*item, ofst);
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
 }
 
-void Num_prep(container *lst,ofstream &ofst) {
+void Num_prep(container *storehouse_of_wisdom,ofstream &ofst) {
  
-	if(lst->next==lst){
-		ofst<<"none"<<endl;
+	if(storehouse_of_wisdom->next==storehouse_of_wisdom){
+		ofst << "None" << endl;
 		return;
 	}
-	struct container *p;
-	p = lst->next;
-	int num=0;
+	struct container *prov;
+	prov = storehouse_of_wisdom -> next;
+	int num = 0;
 	do {
-		num=num+1;
-		p = p->next; 
-	} while (p != lst); 
+		num = num + 1;
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
 	ofst<<"Container contains " << num 	<< " elements." << endl;
-	p = lst->next;
+	prov = storehouse_of_wisdom->next;
 	do {
-		mudr *s=p->cont;
-		Out(*s,ofst);
-		ofst<<"Num znakov prepinania = "<<Num_prep_mudr(*s)<<endl;
-		p = p->next; 
-	} while (p != lst); 
+		wisdom *item_with_wisdom = prov -> item_with_wisdom;
+		Out(*item_with_wisdom, ofst);
+		ofst << "Num znakov prepinania = " << Num_prep_wisdom(*item_with_wisdom) << endl;
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
 }
 
 struct container *  Init() {
-	struct container *c = new container;
-	c->next = c; 
-	return c;
+	struct container *storehouse_of_wisdom = new container;
+	storehouse_of_wisdom -> next = storehouse_of_wisdom; 
+	return storehouse_of_wisdom;
 }
 
-struct container *  Init2(mudr  *a) {
-	struct container *c = new container;
-	c->cont = a;
-	c->next = c; 
-	return c;
+struct container *  Init2(wisdom  *aphor) {
+	struct container *storehouse_of_wisdom = new container;
+	storehouse_of_wisdom -> item_with_wisdom = aphor;
+	storehouse_of_wisdom -> next = storehouse_of_wisdom; 
+	return storehouse_of_wisdom;
 }
 
-struct container * Clear(container *lst) {
-	struct container *p;
-	p=lst->next;
+struct container * Clear(container *storehouse_of_wisdom) {
+	struct container *prov;
+	prov = storehouse_of_wisdom -> next;
 	do {
 		struct container *temp;
-		temp = p;
-		while (temp->next != p) { 
-			temp = temp->next;
+		temp = prov;
+		while (temp -> next != prov) { 
+			temp = temp -> next;
 		}
-		temp->next = p->next; 
-		p = p->next; // переход к следующему узлу
-	} while (p != lst); // условие окончания обхода
+		temp -> next = prov -> next; 
+		prov = prov -> next; // next node
+	} while (prov != storehouse_of_wisdom); 
 }
 
-int Num_prep_mudr(mudr &m) {
-	switch(m.k){
-		case mudr::key::APHORISM:
-			return Num_prep_aphorism(m.a);
-		case mudr::key::POSLOV:
-			return Num_prep_poslov(m.p);
-		case mudr::key::ZAGAD:
-			return Num_prep_zagad(m.z);
+int Num_prep_wisdom(wisdom &item_with_wisdom) {
+	switch(item_with_wisdom.type_struct){
+		case wisdom::key::APHORISM:
+			return Num_prep_aphorism(item_with_wisdom.aphor);
+		case wisdom::key::PROVERB:
+			return Num_prep_proverb(item_with_wisdom.prov);
+		case wisdom::key::RIDDLE:
+			return Num_prep_riddle(item_with_wisdom.ridd);
 		default:
 			return 0;
 	}
 }
 
-int Num_prep_aphorism(aphorism &a) {
-	int num=0;
-	for(int count=0;count<20;count++){
-		if (a.text[count]=='\0'){
-			break;}
-		if ((a.text[count]==',' ) || (a.text[count]=='.') || (a.text[count]=='!') || (a.text[count]=='?') || (a.text[count]==':') || (a.text[count]=='-') || (a.text[count]==';')){
-			num++;
-		}
-	}
-	return num;
-}
-
-int Num_prep_poslov(poslov &p) {
-	int num=0;
-	for(int count=0;count<20;count++){
-		if (p.text[count]=='\0'){
+int Num_prep_aphorism(aphorism &aphor) {
+	int num = 0;
+	for(int count = 0; count < SIZE; count++){
+		if (aphor.text[count] == '\0'){
 			break;
 		}
-		if ((p.text[count]==',' ) || (p.text[count]=='.') || (p.text[count]=='!') || (p.text[count]=='?') || (p.text[count]==':') || (p.text[count]=='-') || (p.text[count]==';')){
+		if ((aphor.text[count] == ',' ) || (aphor.text[count] == '.') || (aphor.text[count] == '!') || (aphor.text[count] == '?') || (aphor.text[count] == ':') || (aphor.text[count] == '-') || (aphor.text[count] == ';')){
 			num++;
 		}
 	}
 	return num;
 }
 
-int Num_prep_zagad(zagad &z) {
-	int num=0;
-	for(int count=0;count<20;count++){
-		if (z.otvet[count]=='\0'){
+int Num_prep_proverb(proverb &prov) {
+	int num = 0;
+	for(int count = 0; count < SIZE; count++){
+		if (prov.text[count] == '\0'){
 			break;
 		}
-		if ((z.otvet[count]==',' ) || (z.otvet[count]=='.') || (z.otvet[count]=='!') || (z.otvet[count]=='?') || (z.otvet[count]==':') || (z.otvet[count]=='-') || (z.otvet[count]==';')){
+		if ((prov.text[count] == ',' ) || (prov.text[count] == '.') || (prov.text[count] == '!') || (prov.text[count] == '?') || (prov.text[count] == ':') || (prov.text[count] == '-') || (prov.text[count] == ';')){
 			num++;
 		}
 	}
 	return num;
 }
 
-bool Compare(mudr *first,mudr *second) {
-	return(Num_prep_mudr(*first)<Num_prep_mudr(*second));
+int Num_prep_riddle(riddle &ridd) {
+	int num = 0;
+	for(int count = 0; count < SIZE; count++){
+		if (ridd.answer[count] == '\0'){
+			break;
+		}
+		if ((ridd.answer[count] == ',' ) || (ridd.answer[count] == '.') || (ridd.answer[count] == '!') || (ridd.answer[count] == '?') || (ridd.answer[count] == ':') || (ridd.answer[count] == '-') || (ridd.answer[count] == ';')){
+			num++;
+		}
+	}
+	return num;
 }
 
-void Sort(container* c) {
-	struct container *p;
-	p = c->next;
-	int num=0;
+bool Compare(wisdom *first, wisdom *second) {
+	return(Num_prep_wisdom(*first) < Num_prep_wisdom(*second));
+}
+
+void Sort(container* storehouse_of_wisdom) {
+	struct container *prov;
+	prov = storehouse_of_wisdom -> next;
+	
+	int num = 0;
 	do {
-		num=num+1;
-		p = p->next; 
-	} while (p != c); 
-	p = c->next; 
-	for (int count3=0;count3<num;count3++){
-		for (int count2=0;count2<num;count2++){
-			p=c->next;		
-			if(Compare(p->cont, p->next->cont)){
-				c=Swap(p,p->next,c);
-				for(int tmp=0;tmp<count2;tmp++){
-					p=p->next;
+		num = num + 1;
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
+	
+	prov = storehouse_of_wisdom -> next; 
+	for (int count3 = 0; count3 < num; count3++){
+		for (int count2 = 0; count2 < num; count2++){
+			prov = storehouse_of_wisdom -> next;		
+			if(Compare(prov -> item_with_wisdom, prov -> next -> item_with_wisdom)){
+				storehouse_of_wisdom = Swap(prov, prov -> next, storehouse_of_wisdom);
+				for(int tmp=0; tmp < count2; tmp++){
+					prov = prov -> next;
 				}		
 	 		}	
 		}
 	}
 }
 
-struct container * Swap(struct container *lst1, struct container *lst2, struct container *head) {
+struct container * Swap(struct container *storehouse_of_wisdom_1, struct container *storehouse_of_wisdom_2, struct container *head) {
 	struct container *prev1, *prev2, *next1, *next2;
 	prev1 = head;
 	prev2 = head;
-	while (prev1->next != lst1) // поиск узла предшествующего lst1
-    	prev1 = prev1->next;
-	while (prev2->next != lst2) // поиск узла предшествующего lst2
-    	prev2 = prev2->next;
-	next1 = lst1->next; // узел следующий за lst1
-	next2 = lst2->next; // узел следующий за lst2
-	if (lst2 == next1) {	
-    	lst2->next = lst1;
-    	lst1->next = next2;
-    	prev1->next = lst2;
+	while (prev1 -> next != storehouse_of_wisdom_1) // find previous node storehouse_of_wisdom_1 
+    	prev1 = prev1 -> next;
+	while (prev2 -> next != storehouse_of_wisdom_2) // find previous node storehouse_of_wisdom_2 
+    	prev2 = prev2 -> next;
+	next1 = storehouse_of_wisdom_1 -> next; // node next storehouse_of_wisdom_1 
+	next2 = storehouse_of_wisdom_2 -> next; // node next storehouse_of_wisdom_2 
+	if (storehouse_of_wisdom_2 == next1) {	
+    	storehouse_of_wisdom_2 -> next = storehouse_of_wisdom_1;
+    	storehouse_of_wisdom_1 -> next = next2;
+    	prev1 -> next = storehouse_of_wisdom_2;
 	}
-	else if (lst1 == next2) {
-    	lst1->next = lst2;
-    	lst2->next = next1;
-    	prev2->next = lst2;
+	else if (storehouse_of_wisdom_1 == next2) {
+    	storehouse_of_wisdom_1 -> next = storehouse_of_wisdom_2;
+    	storehouse_of_wisdom_2 -> next = next1;
+    	prev2 -> next = storehouse_of_wisdom_2;
 	}
 	else {
-    	prev1->next = lst2;
-    	lst2->next = next1;
-    	prev2->next = lst1;
-		lst1->next = next2;
+    	prev1 -> next = storehouse_of_wisdom_2;
+    	storehouse_of_wisdom_2 -> next = next1;
+    	prev2 -> next = storehouse_of_wisdom_1;
+		storehouse_of_wisdom_1 -> next = next2;
 	}
-	if (lst1 == head)
-		return(lst2);
-	if (lst2 == head)
-		return(lst1);
+	if (storehouse_of_wisdom_1 == head)
+		return(storehouse_of_wisdom_2);
+	if (storehouse_of_wisdom_2 == head)
+		return(storehouse_of_wisdom_1);
+		
 	return(head);
 }
  
-void Out_only_aphorism(container *lst,ofstream &ofst) { 
+void Out_only_aphorism(container *storehouse_of_wisdom, ofstream &ofst) { 
 	
-	if(lst->next==lst){
-		ofst<<"none"<<endl;
+	if(storehouse_of_wisdom -> next == storehouse_of_wisdom) {
+		ofst << "None" << endl;
 		return;
 	}
-	struct container *p;
-	p = lst->next;
-	int num=0;
+	struct container *prov;
+	prov = storehouse_of_wisdom -> next;
+	int num = 0;
 	do {
-		num=num+1;
-		p = p->next; 
-	} while (p != lst); 
-	p = lst->next;
+		num = num + 1;
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
+	
+	prov = storehouse_of_wisdom -> next;
 	do {
-		mudr *s=p->cont;
-		if (s->k==mudr::APHORISM){
-			Out(*s,ofst);
+		wisdom *item = prov-> item_with_wisdom;
+		if (item -> type_struct == wisdom::APHORISM) {
+			Out(*item, ofst);
 		}
-		p = p->next; 
-	} while (p != lst); 
+		prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
 }
 
 
-void MultiMethod(container *c, ofstream &ofst) {
+void MultiMethod(container *storehouse_of_wisdom, ofstream &ofst) {
 	ofst << "Multimethod." << endl;
-	struct container *p;
+	struct container *prov;
 	struct container *p2;
-	p=c->next;
-	int num=0;
+	
+	prov = storehouse_of_wisdom -> next;
+	int num = 0;
 	do {
-	    num=num+1;
-	    p = p->next; 
-	} while (p != c); 
-	p = c->next; 
-	for (int count3=0;count3<num;count3++){	
-		p2=c->next;
-			for(int tmp=0;tmp<count3;tmp++) {
-				p2=p2->next;
+	    num = num + 1;
+	    prov = prov -> next; 
+	} while (prov != storehouse_of_wisdom); 
+	prov = storehouse_of_wisdom -> next; 
+	
+	for (int count3 = 0; count3 < num; count3++) {	
+		p2 = storehouse_of_wisdom -> next;
+			for(int tmp = 0; tmp < count3; tmp++) {
+				p2 = p2 -> next;
 			}	
-		for (int count2=count3;count2<num;count2++){
-			switch(p->cont->k) {
- 				case mudr::APHORISM:
- 					switch(p2->cont->k) {
- 						case mudr::POSLOV:
- 							ofst << "APHORISM and POSLOV." << endl;
+		for (int count2 = count3; count2 < num; count2++) {
+			switch( prov -> item_with_wisdom -> type_struct) {
+ 				case wisdom::APHORISM:
+ 					switch(p2 -> item_with_wisdom -> type_struct) {
+ 						case wisdom::PROVERB:
+ 							ofst << "APHORISM and PROVERB." << endl;
  							break;
-						case mudr::APHORISM:
+						case wisdom::APHORISM:
  							ofst << "APHORISM and APHORISM." << endl;
  							break;
- 						case mudr::ZAGAD:
+ 						case wisdom::RIDDLE:
  							ofst << "APHORISM and ZAGADKA." << endl;
  							break;
  						default:
  							ofst << "Unknown type" << endl;
  					}
 	 		}
-			switch(p->cont->k) {
- 				case mudr::POSLOV:
- 					switch(p2->cont->k) {
- 						case mudr::POSLOV:
- 							ofst << "POSLOV and POSLOV." << endl;
+			switch(prov -> item_with_wisdom -> type_struct) {
+ 				case wisdom::PROVERB:
+ 					switch(p2 -> item_with_wisdom -> type_struct) {
+ 						case wisdom::PROVERB:
+ 							ofst << "PROVERB and PROVERB." << endl;
  							break;
-						case mudr::APHORISM:
- 							ofst << "POSLOV and APHORISM." << endl;
+						case wisdom::APHORISM:
+ 							ofst << "PROVERB and APHORISM." << endl;
  							break;
- 						case mudr::ZAGAD:
- 							ofst << "POSLOV and ZAGADKA." << endl;
+ 						case wisdom::RIDDLE:
+ 							ofst << "PROVERB and ZAGADKA." << endl;
  							break;
  						default:
  							ofst << "Unknown type" << endl;
  					}
 	 		}
-	 		switch(p->cont->k) {
- 				case mudr::ZAGAD:
- 					switch(p2->cont->k) {
- 						case mudr::POSLOV:
- 							ofst << "ZAGADKA and POSLOV." << endl;
+	 		switch(prov -> item_with_wisdom -> type_struct) {
+ 				case wisdom::RIDDLE:
+ 					switch(p2 -> item_with_wisdom -> type_struct) {
+ 						case wisdom::PROVERB:
+ 							ofst << "ZAGADKA and PROVERB." << endl;
  							break;
-						case mudr::APHORISM:
+						case wisdom::APHORISM:
  							ofst << "ZAGADKA and APHORISM." << endl;
  							break;
- 						case mudr::ZAGAD:
+ 						case wisdom::RIDDLE:
  							ofst << "ZAGADKA and ZAGADKA." << endl;
  							break;
  						default:
  							ofst << "Unknown type" << endl;
  					}
 	 		}
-	 		Out(*(p->cont), ofst);
- 			Out(*(p2->cont), ofst);
- 			p2=p2->next;
+	 		Out(*(prov -> item_with_wisdom), ofst);
+ 			Out(*(p2 -> item_with_wisdom), ofst);
+ 			p2 = p2 -> next;
 		}
-		p=p->next;
+		prov = prov -> next;
 	}
 }
