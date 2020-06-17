@@ -1,0 +1,7 @@
+Container contains 2 elements.
+It is Aphorism: Author = Aphorism2, text = Aphorism_text2,..
+Mark =4
+Num znakov prepinania = 3
+It is Aphorism: Author = Aphorism1, text = Aphorism_text1,,
+Mark =5
+Num znakov prepinania = 2

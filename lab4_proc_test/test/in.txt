@@ -1,0 +1,8 @@
+1
+Aphorism1
+Aphorism_text1,,
+5
+1
+Aphorism2
+Aphorism_text2,..
+4
