@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+bool FileIsExist(string filePath);
+
 struct poslov {
 	char strana[20];
 	char text[20];
@@ -34,23 +36,23 @@ struct container {
 	struct container *next;
 };
  	
-int In(container *lst,ifstream &ifst);
+int In(container *head,ifstream &ifst);
 void In(aphorism &a, ifstream &ifst);
 void In(poslov &p, ifstream &ifst);
 void In(zagad &z, ifstream &ifst);
 mudr* In(ifstream &ifst);
 void Out(poslov &p, ofstream &ofst);
 void Out(aphorism &a,ofstream &ofst);
-void Out(zagad &z, ifstream &ifst);
-void Out(mudr &s, ofstream &ofst);
-void Out(container *lst,ofstream &ofst);
-struct container *  Init();
-struct container *  Init2(mudr  *a);
+void Out(zagad &z, ofstream &ofst);
+void Out(mudr &mudrost, ofstream &ofst);
+void Out(container *head,ofstream &ofst);
+struct container * Init();
+struct container * Init2(mudr *a);
 struct container * Clear(container *lst);	
 int Num_prep_aphorism(aphorism &a);
 int Num_prep_poslov(poslov &p);
 int Num_prep_mudr(mudr &m);
-void Num_prep(container *lst,ofstream &ofst);
+void Num_prep(container *head,ofstream &ofst);
 int Num_prep_zagad(zagad &z);
 bool Compare(mudr *first,mudr *second);
 void Sort(container *c);

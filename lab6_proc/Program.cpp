@@ -1,13 +1,12 @@
-#include "Program.h"
-//using namespace std;	 
-int In(container *lst,ifstream &ifst){
+#include "Program.h" 
+int In(container *head,ifstream &ifst){
 	struct container *last = Init2(In(ifst));
 	if (last->cont==0){
 		return 0;
 	}
 	struct container *tmp;
-	tmp = lst->next; 
-	lst->next = last; 
+	tmp = head->next; 
+	head->next = last; 
 	last->next = tmp; 	  
 	while(!ifst.eof()) {			
 		struct container *newItem = Init2(In(ifst));
@@ -45,30 +44,30 @@ void In(poslov &p, ifstream &ifst) {
 }
  
 mudr * In(ifstream &ifst) {
-	mudr *sp;
+	mudr *mudrost;
 	int k;
 	ifst >> k;
 	switch(k) {
 		case 1:
-			sp = new mudr;
-			sp->k = mudr::key::APHORISM;
-			In(sp->a, ifst);
+			mudrost = new mudr;
+			mudrost->k = mudr::key::APHORISM;
+			In(mudrost->a, ifst);
 			break;
 		case 2:
-			sp = new mudr;
-			sp->k = mudr::key::POSLOV;
-			In(sp->p, ifst);
+			mudrost = new mudr;
+			mudrost->k = mudr::key::POSLOV;
+			In(mudrost->p, ifst);
 			break;
 		case 3:
-			sp = new mudr;
-			sp->k = mudr::key::ZAGAD;
-			In(sp->z, ifst);
+			mudrost = new mudr;
+			mudrost->k = mudr::key::ZAGAD;
+			In(mudrost->z, ifst);
 			break;
 		default:
 			return 0;
 	}
-	ifst >> sp->mark;	
-	return sp;
+	ifst >> mudrost->mark;	
+	return mudrost;
 }
  
 void Out(poslov &p, ofstream &ofst) {
@@ -86,70 +85,70 @@ void Out(aphorism &a, ofstream &ofst) {
 	<< ", text = " << a.text << endl;
 }
  
-void Out(mudr &s, ofstream &ofst) {
-	switch(s.k) {
+void Out(mudr &mudrost, ofstream &ofst) {
+	switch(mudrost.k) {
 		case mudr::key::APHORISM:
-			Out(s.a, ofst);
+			Out(mudrost.a, ofst);
 			break;
 		case mudr::key::POSLOV:
-			Out(s.p, ofst);
+			Out(mudrost.p, ofst);
 			break;
 		case mudr::key::ZAGAD:
-			Out(s.z, ofst);
+			Out(mudrost.z, ofst);
 			break;
 		default:
-		ofst << "Incorrect figure!" << endl;
+		ofst << "Incorrect phrase!" << endl;
 	};
-	if ((s.mark>10) || (s.mark<0)){
+	if ((mudrost.mark>10) || (mudrost.mark<0)){
 		ofst << "Incorrect reviw"<<endl;
 		return;
 	}
-	ofst << "Mark ="<<s.mark <<endl;
+	ofst << "Mark ="<<mudrost.mark <<endl;
 }
  
-void Out(container *lst,ofstream &ofst) {
+void Out(container *head,ofstream &ofst) {
 	
-	if(lst->next==lst){
+	if(head->next==head){
 		ofst<<"none"<<endl;
 		return;
 	}
 	struct container *p;
-	p = lst->next;
+	p = head->next;
 	int num=0;
 	do {
 		num=num+1;
 		p = p->next; 
-	} while (p != lst); 
+	} while (p != head); 
 	ofst<<"Container contains " << num 	<< " elements." << endl;
-	p = lst->next;
+	p = head->next;
 	do {
-		mudr *s=p->cont;
-		Out(*s,ofst);
+		mudr *mudrost=p->cont;
+		Out(*mudrost,ofst);
 		p = p->next; 
-	} while (p != lst); 
+	} while (p != head); 
 }
 
-void Num_prep(container *lst,ofstream &ofst) {
+void Num_prep(container *head,ofstream &ofst) {
  
-	if(lst->next==lst){
+	if(head->next==head){
 		ofst<<"none"<<endl;
 		return;
 	}
 	struct container *p;
-	p = lst->next;
+	p = head->next;
 	int num=0;
 	do {
 		num=num+1;
 		p = p->next; 
-	} while (p != lst); 
+	} while (p != head); 
 	ofst<<"Container contains " << num 	<< " elements." << endl;
-	p = lst->next;
+	p = head->next;
 	do {
-		mudr *s=p->cont;
-		Out(*s,ofst);
-		ofst<<"Num znakov prepinania = "<<Num_prep_mudr(*s)<<endl;
+		mudr *mudrost=p->cont;
+		Out(*mudrost,ofst);
+		ofst<<"Num znakov prepinania = "<<Num_prep_mudr(*mudrost)<<endl;
 		p = p->next; 
-	} while (p != lst); 
+	} while (p != head); 
 }
 
 struct container *  Init() {
@@ -158,9 +157,9 @@ struct container *  Init() {
 	return c;
 }
 
-struct container *  Init2(mudr  *a) {
+struct container *  Init2(mudr  *mudrost) {
 	struct container *c = new container;
-	c->cont = a;
+	c->cont = mudrost;
 	c->next = c; 
 	return c;
 }
@@ -175,18 +174,18 @@ struct container * Clear(container *lst) {
 			temp = temp->next;
 		}
 		temp->next = p->next; 
-		p = p->next; // переход к следующему узлу
-	} while (p != lst); // условие окончания обхода
+		p = p->next;
+	} while (p != lst);
 }
 
-int Num_prep_mudr(mudr &m) {
-	switch(m.k){
+int Num_prep_mudr(mudr &mudrost) {
+	switch(mudrost.k){
 		case mudr::key::APHORISM:
-			return Num_prep_aphorism(m.a);
+			return Num_prep_aphorism(mudrost.a);
 		case mudr::key::POSLOV:
-			return Num_prep_poslov(m.p);
+			return Num_prep_poslov(mudrost.p);
 		case mudr::key::ZAGAD:
-			return Num_prep_zagad(m.z);
+			return Num_prep_zagad(mudrost.z);
 		default:
 			return 0;
 	}
@@ -260,12 +259,12 @@ struct container * Swap(struct container *lst1, struct container *lst2, struct c
 	struct container *prev1, *prev2, *next1, *next2;
 	prev1 = head;
 	prev2 = head;
-	while (prev1->next != lst1) // поиск узла предшествующего lst1
+	while (prev1->next != lst1)
     	prev1 = prev1->next;
-	while (prev2->next != lst2) // поиск узла предшествующего lst2
+	while (prev2->next != lst2)
     	prev2 = prev2->next;
-	next1 = lst1->next; // узел следующий за lst1
-	next2 = lst2->next; // узел следующий за lst2
+	next1 = lst1->next;
+	next2 = lst2->next;
 	if (lst2 == next1) {	
     	lst2->next = lst1;
     	lst1->next = next2;
@@ -309,4 +308,13 @@ void Out_only_aphorism(container *lst,ofstream &ofst) {
 		}
 		p = p->next; 
 	} while (p != lst); 
+}
+
+bool FileIsExist(string filePath) {
+    bool isExist = false;
+    std::ifstream fin(filePath.c_str());
+    if(fin.is_open())
+        isExist = true;
+    fin.close();
+    return isExist;
 }
