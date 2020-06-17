@@ -1,34 +1,33 @@
 #include "Program.h"
+
 int main(int argc, char* argv[]) {
-	if(argc !=3) {
-		cout << "incorrect command line! "
+	
+	if(argc != 3) {
+		cout << "Incorrect command line! "
 		"Waited: command infile outfile" << endl;
 		return(1);
 	}
+	
 	ifstream ifst(argv[1]);
 	ofstream ofst(argv[2]);
-	//ifstream ifst("in.txt");
-	//ofstream ofst("ot.txt");
-	cout << "Start"<< endl;
-	container* c;
-	c= Init();
-	int tmp=1;
-	tmp=In(c, ifst);
-	if(tmp==0){
-		cout<<"incorrect input"<<endl;
+	
+	container* storehouse_of_wisdom;
+	storehouse_of_wisdom = Init();
+	
+	int tmp = 1;
+	tmp = In(storehouse_of_wisdom, ifst);
+	
+	if(tmp == 0){
+		cout << "Incorrect input" << endl;
 		return 0;
 	}
+	
 	ofst << "Filled sorted container. " << endl;
-	MultiMethod(c, ofst);
-	//Sort(c);
-	//Out(c, ofst);
-	//Num_prep(c, ofst);
-	//ofst << "Only aphorism " << endl;
-	//Out_only_aphorism(c, ofst);
-	Clear(c);
-	ofst << "Empty container. " << endl;
-	Out(c, ofst);
-	cout << "Stop"<< endl;
+	MultiMethod(storehouse_of_wisdom, ofst);
+	
+	Clear(storehouse_of_wisdom);
+	cout << "Success final program" << endl;
+	
 	return 0;
 }
 
